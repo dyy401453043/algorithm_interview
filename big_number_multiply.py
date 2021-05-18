@@ -1,4 +1,4 @@
-# leet_code 43, 字符串大数字乘法，找规律很重要！
+# leet_code 43, 字符串大数字乘法，找规律很重要 num1[i]*num[j]会出现在result[i+j]和result[i+j+1]中！
 
 def reverse(string):
     reverse = ''
