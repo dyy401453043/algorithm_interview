@@ -4,7 +4,7 @@ class ListNode:
         self.val = x
         self.next = None
 
-def detectCycle(head): # 想不到快慢指针就用python集合把之前走过的路径存起来
+def detectCycle(head): # 想不到快慢指针就用python集合把之前走过的路径存起来,集合是哈希的,查找也是O(1)
     if not head or not head.next:
         return None
     fast_node = head
