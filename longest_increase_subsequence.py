@@ -35,4 +35,4 @@ def LIS(arr):
     return result
 
 if __name__ == '__main__':
-    print(LIS([1,2,8,6,4]))
+    print(LIS([2,1,5,3,6,4,8,9,7]))
