@@ -24,4 +24,3 @@ class Solution:
                     l3.next = ListNode(0)
             l3 = l3.next
         return head.next
-
