@@ -1,4 +1,5 @@
 # leetcode 22，括号生成，dfs+回溯减枝
+# 其实这题可以用dp写，比较难想到，"(" + 【i=p时所有括号的排列组合】 + ")" + 【i=q时所有括号的排列组合】
 class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
         result = []
