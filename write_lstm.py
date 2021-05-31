@@ -3,6 +3,7 @@ import torch.nn as nn
 import math
 from torch.nn.parameter import Parameter
 from torch.tensor import Tensor
+from torchsummary import summary
 
 class NaiveLSTM(nn.Module):
     """Naive LSTM like nn.LSTM"""
@@ -52,7 +53,7 @@ class NaiveLSTM(nn.Module):
             state: ([1, 1, hidden_size], [1, 1, hidden_size])
         """
 
-        #         batch_size, seq_size , _ = inputs.size()
+        batch_size, seq_size , _ = inputs.size()
 
         if state is None:
             h_t = torch.zeros(1, self.hidden_size).t()
@@ -64,7 +65,7 @@ class NaiveLSTM(nn.Module):
 
         hidden_seq = []
 
-        seq_size = 1
+        # seq_size = 1
         for t in range(seq_size):
             x = inputs[:, t, :].t()
             # input gate
@@ -96,7 +97,7 @@ def reset_weigths(model):
         nn.init.constant_(weight, 0.5)
 
 if __name__ == '__main__':
-    inputs = torch.ones(1, 1, 10)
+    inputs = torch.ones(1, 2, 10)
     h0 = torch.ones(1, 1, 20)
     c0 = torch.ones(1, 1, 20)
     print(h0.shape, h0)
@@ -104,11 +105,18 @@ if __name__ == '__main__':
     print(inputs.shape, inputs)
     # test naive_lstm with input_size=10, hidden_size=20
     naive_lstm = NaiveLSTM(10, 20)
-    reset_weigths(naive_lstm)
-    lstm = nn.LSTM(10, 20)
-    reset_weigths(lstm)
-    output2, (hn2, cn2) = lstm(inputs, (h0, c0))
-    print(hn2.shape, cn2.shape, output2.shape)
-    print(hn2)
-    print(cn2)
-    print(output2)
+    # summary(naive_lstm,input_size=(10,20))
+    # reset_weigths(naive_lstm)
+    output1, (hn1, cn1) = naive_lstm(inputs, (h0, c0))
+    # print(hn1.shape, cn1.shape, output1.shape)
+    # print(hn1)
+    # print(cn1)
+    # print(output1)
+    lstm = nn.LSTM(10, 20, batch_first=True)
+    # summary(lstm,input_size=((1,1,10),(1,1,20),(1,1,20)))
+    # reset_weigths(lstm)
+    # output2, (hn2, cn2) = lstm(inputs, (h0, c0))
+    # print(hn2.shape, cn2.shape, output2.shape)
+    # print(hn2)
+    # print(cn2)
+    # print(output2)
