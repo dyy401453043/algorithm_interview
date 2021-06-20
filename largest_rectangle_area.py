@@ -1,4 +1,4 @@
-# leetcode 84,直方图中的最大矩形面积，（双指针+分治）或者单调栈，单调栈除了可以求右侧第一个小还可以同时求左侧第一个小于等于
+# leetcode 84,直方图中的最大矩形面积,用(双指针+分治)或者单调栈,单调栈除了可以求右侧第一个小于还可以同时求左侧第一个小于等于
 class Solution:
     def largestRectangleArea(self, heights: List[int]) -> int:
         def area_across_k(arr, k):
