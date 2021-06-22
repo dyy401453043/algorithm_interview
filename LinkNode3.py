@@ -20,26 +20,25 @@ class Solution:
                 print(str(root.val) + ' ', end='')
                 root = root.next
 
-        def reverse(head, k):
-            dummy = ListNode(next=head)
-            i = 0
-            while i < k - 1 and head.next:  # 穿针引线法，head不主动移动，把nxt提取到dummy后面
+        def reverse(head,k):
+            dummy = ListNode(None)
+            dummy.next = head
+            i = 1
+            while i < k and head.next: # k个一组意味着挪动k-1次，i from 1 to k-1执行挪动，最后定格在 k
                 nxt = head.next
                 head.next = nxt.next
                 nxt.next = dummy.next
                 dummy.next = nxt
-                i += 1
-            if head.next:
-                head.next = reverse(head.next, k)
-            elif not head.next and i < k - 1:  # 最后一轮要转回来，有点麻烦，在预期之外，强行再转一下吧
+                i+=1
+            if i == k and head.next: # 如果该组正常完成（即进行了k-1次挪动）且后面还有节点
+                head.next = reverse(head.next,k)
+            elif i == k: # 如果该组正常完成（即进行了k-1次挪动）且后面没有节点
+                pass
+            else: # 非正常完成
                 head = dummy.next
-                while head.next:
+                for j in range(i-1): # i-1表示挪动的次数
                     nxt = head.next
                     head.next = nxt.next
                     nxt.next = dummy.next
                     dummy.next = nxt
             return dummy.next
-
-        # root = create_linklist(0,[1,2,3,4,5])
-        # print_linklink(reverse(root, k=3))
-        return reverse(head, k)
