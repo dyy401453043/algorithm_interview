@@ -31,5 +31,26 @@ def zigzagLevelOrder(root):
             layers.append(layer + 1)
     return result
 
+# leetcode 103，锯齿遍历二叉树，队列取出size个元素就能知第几层
+class Solution:
+    def zigzagLevelOrder(self, root: TreeNode) -> List[List[int]]:
+        if not root:
+            return []
+        result = []
+        queue = [root]
+        flag = True
+        while len(queue) > 0:
+            temp = queue
+            queue = []
+            for node in temp:
+                if node.left:
+                    queue.append(node.left)
+                if node.right:
+                    queue.append(node.right)
+            val_list = [node.val for node in temp]
+            result.append(val_list if flag else val_list[::-1])
+            flag = not flag
+        return result 
+
 if __name__ == '__main__':
     pass
