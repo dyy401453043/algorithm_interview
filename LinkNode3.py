@@ -42,3 +42,40 @@ class Solution:
                     nxt.next = dummy.next
                     dummy.next = nxt
             return dummy.next
+
+class Solution:
+    def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        def reverse_k(head_node, k):
+            if not head_node or not head_node.next or k <= 1:
+                return head_node
+            
+            dummy = ListNode(next=head_node)
+            temp, left, right, start, end = head_node, head_node, head_node, dummy, head_node
+            while end:
+                count = 0
+                while count < k:
+                    if end:
+                        end = end.next
+                        count += 1
+                    else:
+                        break
+                if count != k:
+                    break
+                right = right.next
+                #s->1(l)->2(r)->3->e
+                while right != end: 
+                    temp = right.next
+                    right.next = left 
+                    left = right
+                    right = temp
+                #s->1<->2<-3(l) e(r)
+                temp = start.next 
+                temp.next = end
+                # s->1  and 3(l)->2->1(temp)->e(r)
+                start.next = left
+                # s->3(l)->2->1->e(r)
+                start = temp
+                temp, left, right, = end, end, end
+                # 3->2->1(s)->e(l,r)
+            return dummy.next
+        return reverse_k(head, k)
