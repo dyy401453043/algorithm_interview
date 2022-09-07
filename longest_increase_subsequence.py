@@ -1,38 +1,21 @@
-# NC91 最长递增子序列，较难题，贪心+二分，贪心策略不容易想到
-def search(vec, num):
-    length = len(vec)
-    if length == 1:
-        return 0
-    vec1, vec2 = vec[:int(length/2)], vec[int(length/2):]
-    if num < vec1[-1]:
-        return search(vec1, num)
-    elif vec1[-1] < num < vec2[0]:
-        return int(length/2)
-    else:
-        return int(length/2) + search(vec2, num)
+# leetcode300 最长递增子序列，维护所有长度的子序列的尾值&二分查找
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        length = len(nums)
+        m = [nums[0]]
 
-def LIS(arr):
-    vec = []
-    max_count = []
-    for i in range(len(arr)):
-        if i == 0:
-            vec.append(arr[i])
-            max_count.append(1)
-        else:
-            if arr[i] > vec[-1]:
-                vec.append(arr[i])
-                max_count.append(len(vec))
-            else:
-                j = search(vec, arr[i])
-                vec[j] = arr[i]
-                max_count.append(j+1)
-    temp = len(vec)
-    result = []
-    for i in range(len(max_count)-1,-1,-1):
-        if max_count[i] == temp:
-            result = [arr[i]] + result
-            temp -= 1
-    return result
+        for i in range(1, length):
+            l, r = 0, len(m)-1
+            while l <= r:
+                mid = (l+r) // 2
+                if m[mid] >= nums[i]:
+                    r = mid - 1
+                else:
+                    l = mid + 1
+            
+            if r+1 < len(m) and nums[i] < m[r+1]:
+                m[r+1] = nums[i]
+            elif r+1 == len(m):
+                m.append(nums[i])
 
-if __name__ == '__main__':
-    print(LIS([2,1,5,3,6,4,8,9,7]))
+        return len(m)
